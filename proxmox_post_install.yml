@@ -12,7 +12,7 @@
     - name: Add Community Sub    
       lineinfile:
         path: /etc/apt/sources.list
-        regexp: /^(.*)$/m
+        regexp: '/^(.*)$/m'
         insertbefore: '^deb http://ftp.us.debian.org/debian buster main contrib'
         line: deb http://download.proxmox.com/debian buster pve-no-subscription
     - name: Update cache
