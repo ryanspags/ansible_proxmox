@@ -22,12 +22,9 @@
         insertbefore: '^deb http://ftp.us.debian.org/debian buster main contrib'
         line: deb http://download.proxmox.com/debian buster pve-no-subscription
         
-    - name: Update cache
+    - name: Update & Upgrade
       apt:
         update_cache: yes
-        
-    - name: Update dist 
-      apt:
         upgrade: dist
         
     - name: Install ifupdown2
