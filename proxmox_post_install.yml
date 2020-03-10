@@ -4,31 +4,42 @@
   become: yes
   user: root
   tasks:
+    - name: Backup sources.list
+      copy:
+        src: /etc/apt/sources.list
+        dest: /etc/apt/sources.list.backup
+        
     - name: Disable Enterprise Sub
       lineinfile:
         path: /etc/apt/sources.list.d/pve-enterprise.list
         regexp: '^deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise'
         line: '#deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise'
+        
     - name: Add Community Sub    
       lineinfile:
         path: /etc/apt/sources.list
         regexp: '/^(.*)$/m'
         insertbefore: '^deb http://ftp.us.debian.org/debian buster main contrib'
         line: deb http://download.proxmox.com/debian buster pve-no-subscription
+        
     - name: Update cache
       apt:
         update_cache: yes
+        
     - name: Update dist 
       apt:
         upgrade: dist
+        
     - name: Install ifupdown2
       apt:
         name: ifupdown2
         state: present
+        
     - name: Remove nag
       replace:
         path: /usr/share/perl5/PVE/API2/Subscription.pm
         regexp: 'NotFound'
         replace: 'Active'
+        
     - name: Reboot System
       reboot:
