@@ -6,8 +6,9 @@
   tasks:
     - name: Backup sources.list
       copy:
-        src: /etc/apt/sources.list
-        dest: /etc/apt/sources.list.backup
+        remote_src=True
+        src=/etc/apt/sources.list
+        dest=/etc/apt/sources.list.backup
         
     - name: Disable Enterprise Sub
       lineinfile:
